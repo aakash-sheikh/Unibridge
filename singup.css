@@ -1,0 +1,166 @@
+/* Reset some defaults */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+/* Header */
+
+.header {
+    background-color: #003366;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+/* Auth buttons */
+
+.auth-buttons .btn {
+    text-decoration: none;
+    background-color: #fff;
+    color: #003366;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: 10px;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.auth-buttons .btn-outline {
+    background-color: transparent;
+    border-color: white;
+    color: rgb(8, 4, 75);
+}
+
+.auth-buttons .btn-outline:hover {
+    background-color: white;
+    color: #003366;
+}
+
+
+/* Main Form */
+
+main {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #003366;
+}
+
+.connect-tag {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-group input {
+    flex: 1 1 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group.double-field input {
+    flex: 1 1 calc(50% - 0.5rem);
+}
+
+button[type="submit"],
+.form-group button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button[type="submit"]:hover,
+.form-group button:hover {
+    background-color: #005299;
+}
+
+.validation-msg {
+    font-size: 0.9rem;
+    color: crimson;
+    text-align: center;
+    margin-top: 5px;
+}
+
+#internshipMessage {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    color: green;
+}
+
+
+/* Footer */
+
+.footer {
+    margin-top: 3rem;
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}

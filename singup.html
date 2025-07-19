@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unibridge – Student Signup</title>
+
+    <!-- global site styles (header, footer, colours) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="singup.css">
+
+    <!-- page‑specific form styles -->
+</head>
+
+<body>
+
+    <!-- ▸▸ HEADER (identical to index.html) ◂◂ -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="../images/logo.png" alt="Unibridge Logo" />
+                <span>Unibridge</span>
+            </div>
+
+            <div class="auth-buttons">
+                <!-- “Sign Up” link omitted because we are already here -->
+                <a href="../index.html" class="btn">Home</a>
+                <a href="../login/login.html" class="btn btn-outline">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ▸▸ SIGNUP FORM ◂◂ -->
+    <main>
+        <form id="signupForm" method="POST" action="signup.php">
+            <h2>Student Signup</h2>
+
+            <!-- Student ID + Load button -->
+            <div class="form-group">
+                <input type="text" id="studentId" name="studentId" placeholder="Enter your IUB Student ID" required />
+                <button type="button" onclick="loadStudentDetails()">Load Data</button>
+            </div>
+
+            <!-- Auto‑filled details -->
+            <div class="form-group">
+                <input type="text" id="studentName" name="studentName" placeholder="Student Name" readonly required />
+                <input type="text" id="departmentName" name="departmentName" placeholder="Department" readonly required />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="firstMajor" name="firstMajor" placeholder="Major" readonly required />
+                <input type="text" id="minor" name="minor" placeholder="Minor" readonly />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="fathersName" name="fathersName" placeholder="Father's Name" readonly />
+                <input type="text" id="mothersName" name="mothersName" placeholder="Mother's Name" readonly />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="earnedCredit" name="earnedCredit" placeholder="Earned Credit" readonly required />
+            </div>
+
+            <!-- Contact + credentials -->
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="IUB Email (e.g. name@iub.edu.bd)" required />
+                <input type="tel" id="contact" name="contact" placeholder="Contact Number" />
+            </div>
+
+            <div class="form-group double-field">
+                <input type="password" id="password" name="password" placeholder="Password" required />
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Reconfirm Password" required />
+            </div>
+            <span id="passwordMatch" class="validation-msg"></span>
+
+            <button type="submit">Register</button>
+            <div id="loadStatus" class="validation-msg"></div>
+        </form>
+    </main>
+
+    <!-- ▸▸ FOOTER (identical to index.html) ◂◂ -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Unibridge | Independent University, Bangladesh</p>
+        </div>
+    </footer>
+
+    <!-- ▸▸ PAGE JS ◂◂ -->
+    <script>
+        function clearFields() {
+            ["studentName", "departmentName", "firstMajor", "minor",
+                "fathersName", "mothersName", "earnedCredit"
+            ].forEach(id =>
+                document.getElementById(id).value = "");
+        }
+
+        async function loadStudentDetails() {
+            const sid = document.getElementById("studentId").value.trim();
+            const status = document.getElementById("loadStatus");
+            status.style.color = "crimson";
+
+            if (!sid) {
+                status.textContent = "⚠️ Enter a Student ID.";
+                clearFields();
+                return;
+            }
+
+            status.textContent = "⏳ Loading…";
+            try {
+                const res = await fetch(`https://iras.iub.edu.bd:8079/api/v2/profile/${sid}/load-student-details`);
+                const {
+                    data
+                } = await res.json();
+
+                if (!data || !data.studentName) {
+                    status.textContent = "⚠️ Student not found in IUB system.";
+                    clearFields();
+                    return;
+                }
+
+                document.getElementById("studentName").value = data.studentName || "";
+                document.getElementById("departmentName").value = data.departmentName || "";
+                document.getElementById("firstMajor").value = data.firstMajor || "";
+                document.getElementById("minor").value = data.minor || "";
+                document.getElementById("fathersName").value = data.fathersName || "";
+                document.getElementById("mothersName").value = data.mothersName || "";
+                document.getElementById("earnedCredit").value = data.earnedCredit || "";
+
+                const earned = parseFloat(data.earnedCredit);
+                const message = document.createElement("div");
+                message.id = "internshipMessage";
+                message.textContent = "🎉 You are eligible for internship!";
+                document.getElementById("signupForm").appendChild(message);
+
+
+                status.textContent = "✅ Data loaded successfully!";
+                status.style.color = "green";
+            } catch (err) {
+                console.error(err);
+                status.textContent = "⚠️ Error loading data.";
+                clearFields();
+            }
+        }
+
+        document.getElementById("confirmPassword").addEventListener("input", function() {
+            const mismatch = document.getElementById("password").value !== this.value;
+            document.getElementById("passwordMatch").textContent = mismatch ? "Passwords do not match." : "";
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unibridge – Employer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff6ed;
+            color: #333;
+            line-height: 1.6
+        }
+        
+        .header {
+            background-color: #fff6ed;
+            color: rgb(120, 5, 5);
+            padding: 1rem 0;
+        }
+        
+        .header-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .auth-buttons a {
+            color: white;
+            background: #0066cc;
+            padding: 0.4rem 0.8rem;
+            margin-left: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        
+        .welcome {
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #004080;
+        }
+        
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        section h3 {
+            border-bottom: 2px solid #004080;
+            padding-bottom: 0.4rem;
+            margin-bottom: 1rem;
+            color: #004080;
+        }
+        
+        form>* {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        
+        form button {
+            width: auto;
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.7rem 1.4rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        form button:hover {
+            background-color: #0066cc;
+        }
+        
+        .notification {
+            background-color: #e6ffe6;
+            border-left: 5px solid green;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+            font-weight: 600;
+            color: #006600;
+        }
+        /* Modal Styles */
+        
+        #previewModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        #previewModal .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+        
+        #previewModal button.close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.4rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #004080;
+        }
+        
+        #modalContent p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Unibridge Logo" />
+                <div>
+                    <strong>Unibridge</strong>
+                    <div class="welcome">Welcome to Employer Dashboard</div>
+                </div>
+            </div>
+            <div class="auth-buttons">
+                <a href="index.html">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>Employer Dashboard</h2>
+
+        <!-- Organization Profile -->
+        <section>
+            <h3>🏢 Create Organization Profile</h3>
+            <form id="profileForm" onsubmit="handleProfileSubmit(event)">
+                <input type="text" name="orgName" placeholder="Organization Name" required />
+                <input type="text" name="repDesignation" placeholder="Representative Designation" required />
+                <input type="email" name="orgEmail" placeholder="Organization Email" required />
+                <input type="tel" name="contact" placeholder="Contact Number" />
+                <label for="orgType">Organization Type</label>
+                <select id="orgType" name="orgType" required>
+          <option value="">--Select Type--</option>
+          <option value="NGO">NGO</option>
+          <option value="IT">IT</option>
+          <option value="Bank">Bank</option>
+        </select>
+                <button type="submit">Save Profile</button>
+            </form>
+            <div id="profileNotification" class="notification">✅ Profile saved successfully!</div>
+        </section>
+
+        <!-- Job Circular Posting with Preview -->
+        <section>
+            <h3>📄 Post Job Circular (with Preview)</h3>
+            <form id="jobCircularForm" onsubmit="handleJobCircularPreview(event)">
+                <input type="text" name="jobTitle" placeholder="Job Title" required />
+                <input type="text" name="department" placeholder="Department" required />
+                <textarea name="education" placeholder="Educational Qualification" required></textarea>
+                <textarea name="requirements" placeholder="Key Requirements" required></textarea>
+                <textarea name="additional" placeholder="Additional Requirements"></textarea>
+                <input type="text" name="compensation" placeholder="Compensation / Salary" />
+                <input type="text" name="hours" placeholder="Working Hours" />
+                <input type="text" name="location" placeholder="Job Location" />
+                <input type="text" name="applyLink" placeholder="Apply Link or Email" required />
+                <button type="submit">Preview Circular</button>
+            </form>
+            <div id="jobCircularNotification" class="notification">✅ Job circular posted successfully!</div>
+        </section>
+
+        <!-- Circular Upload -->
+        <section>
+            <h3>📢 Upload Circular</h3>
+            <form id="postCircularForm" onsubmit="handlePostCircular(event)">
+                <input type="text" name="circularTitle" placeholder="Circular Title" required />
+                <textarea name="circularDesc" rows="4" placeholder="Description" required></textarea>
+                <input type="file" name="uploadFile" accept=".pdf,.doc,.docx,.jpg,.png" />
+                <button type="submit">Post Circular</button>
+            </form>
+            <div id="circularNotification" class="notification">✅ Circular posted successfully!</div>
+        </section>
+
+        <!-- Appointment Request -->
+        <section>
+            <h3>📅 Request Appointment</h3>
+            <form id="appointmentForm" onsubmit="handleAppointmentRequest(event)">
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="text" name="orgName" placeholder="Organization Name" required />
+                <input type="text" name="position" placeholder="Your Position" required />
+                <input type="email" name="email" placeholder="Your Email" required />
+                <textarea name="purpose" rows="3" placeholder="Purpose of Appointment" required></textarea>
+                <input type="date" name="date" required />
+                <input type="time" name="time" required />
+                <button type="submit">Request Appointment</button>
+            </form>
+            <div id="appointmentNotification" class="notification">✅ Appointment requested. You’ll be notified when approved.</div>
+        </section>
+
+        <!-- Event Registration -->
+        <section>
+            <h3>🎉 Register for Events</h3>
+            <form id="eventRegForm" onsubmit="handleEventRegistration(event)">
+                <input type="text" name="orgName" placeholder="Organization Name" required />
+                <input type="email" name="email" placeholder="Organization Email" required />
+                <label for="eventSelect">Select Event</label>
+                <select id="eventSelect" name="eventSelect" required>
+          <option value="">--Select Event--</option>
+          <option value="Career Fest 2025">Career Fest 2025 (July 25)</option>
+          <option value="Job Fair 2025">Job Fair 2025 (Aug 15)</option>
+          <option value="Tech Workshop">Tech Workshop (Aug 30)</option>
+        </select>
+                <button type="submit">Register</button>
+            </form>
+            <div id="eventRegNotification" class="notification">✅ Registered! You’ll get a reminder 3 days before the event.</div>
+        </section>
+    </main>
+
+    <!-- Modal for Preview -->
+    <div id="previewModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closePreview()">&times;</button>
+            <div id="modalContent"></div>
+            <button onclick="confirmCircular()" style="margin-top: 1rem;">Confirm & Post</button>
+        </div>
+    </div>
+
+    <script>
+        function showNotification(id) {
+            const notif = document.getElementById(id);
+            notif.style.display = 'block';
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleProfileSubmit(e) {
+            e.preventDefault();
+            showNotification('profileNotification');
+            e.target.reset();
+        }
+
+        function handlePostCircular(e) {
+            e.preventDefault();
+            showNotification('circularNotification');
+            e.target.reset();
+        }
+
+        function handleAppointmentRequest(e) {
+            e.preventDefault();
+            showNotification('appointmentNotification');
+            e.target.reset();
+        }
+
+        function handleEventRegistration(e) {
+            e.preventDefault();
+            showNotification('eventRegNotification');
+            e.target.reset();
+        }
+
+        function handleJobCircularPreview(e) {
+            e.preventDefault();
+            const f = e.target;
+            const modal = document.getElementById('previewModal');
+            const content = document.getElementById('modalContent');
+
+            content.innerHTML = `
+        <h3>📝 Preview Job Circular</h3>
+        <p><strong>Job Title:</strong> ${f.jobTitle.value}</p>
+        <p><strong>Department:</strong> ${f.department.value}</p>
+        <p><strong>Education:</strong> ${f.education.value}</p>
+        <p><strong>Key Requirements:</strong> ${f.requirements.value}</p>
+        <p><strong>Additional Requirements:</strong> ${f.additional.value}</p>
+        <p><strong>Compensation:</strong> ${f.compensation.value}</p>
+        <p><strong>Working Hours:</strong> ${f.hours.value}</p>
+        <p><strong>Location:</strong> ${f.location.value}</p>
+        <p><strong>Apply Link/Email:</strong> ${f.applyLink.value}</p>
+      `;
+            modal.style.display = 'flex';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        function confirmCircular() {
+            closePreview();
+            showNotification('jobCircularNotification');
+            document.getElementById('jobCircularForm').reset();
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unibridge – Student Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff6ed;
+            color: #333;
+            line-height: 1.6
+        }
+        
+        .header {
+            background-color: #fff6ed;
+            color: rgb(120, 5, 5);
+            padding: 1rem 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .auth-buttons a {
+            color: white;
+            background: #0066cc;
+            padding: 0.4rem 0.8rem;
+            margin-left: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        
+        .dashboard {
+            padding: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .dashboard h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-section h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dashboard-section ul {
+            padding-left: 1rem;
+        }
+        
+        .dashboard-section ul li {
+            margin: 0.5rem 0;
+        }
+        
+        .dashboard-section ul li a {
+            color: #004080;
+            text-decoration: none;
+        }
+        
+        .alumni-profile {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .alumni-card {
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 6px;
+            width: 240px;
+            text-align: center;
+        }
+        
+        .alumni-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+        }
+        
+        .directory-link a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+        
+        .appointment-form input,
+        .appointment-form textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.75rem;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .appointment-form button {
+            background-color: #004080;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .notification {
+            background-color: #e6ffe6;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid green;
+            display: none;
+        }
+        
+        footer.footer {
+            background-color: #800000 !important;
+            /* maroon footer */
+            color: #ffffff !important;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Unibridge Logo" />
+                <span><strong>Unibridge</strong></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="index.html">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <h2>🎓 Welcome to Student Dashboard</h2>
+
+        <!-- Internship Circulars -->
+        <div class="dashboard-section">
+            <h3>📢 Internship Circulars</h3>
+            <ul>
+                <li><a href="#">🔗 Global Informatics Ltd – Apply by July 20</a></li>
+                <li><a href="#">🔗 Internship with Robi Axiata – Summer 2025</a></li>
+            </ul>
+        </div>
+
+        <!-- Alumni Profiles -->
+        <div class="dashboard-section">
+            <h3>👨‍🎓 Alumni Profiles</h3>
+            <div class="alumni-profile">
+                <div class="alumni-card">
+                    <img src="alumni1.jpg" alt="Alumni 1" />
+                    <strong>Farzana Ahmed</strong>
+                    <p>Google</p>
+                    <p>Software Engineer</p>
+                    <p>farzana@alumni.iub.edu.bd</p>
+                </div>
+                <div class="alumni-card">
+                    <img src="alumni2.jpg" alt="Alumni 2" />
+                    <strong>Tanvir Hossain</strong>
+                    <p>Meta</p>
+                    <p>Product Manager</p>
+                    <p>tanvir@alumni.iub.edu.bd</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Directory -->
+        <div class="dashboard-section directory-link">
+            <h3>📚 Career Directory</h3>
+            <p>Explore: <a href="https://iub.ac.bd/campus-life/administrative-and-support-services/office-of-career-guidance-and-placement" target="_blank">IUB Career Guidance and Placement</a></p>
+        </div>
+
+        <!-- Appointment Form -->
+        <div class="dashboard-section">
+            <h3>📅 Career Counseling Appointment</h3>
+            <form class="appointment-form" onsubmit="handleAppointment(event)">
+                <input type="text" placeholder="Full Name" required />
+                <input type="text" placeholder="IUB ID" required />
+                <input type="email" placeholder="Email" required />
+                <textarea placeholder="Purpose of Appointment" rows="3" required></textarea>
+                <input type="date" required />
+                <input type="time" required />
+                <button type="submit">Request Appointment</button>
+            </form>
+            <div class="notification" id="notification">
+                ✅ Your appointment request has been submitted. Please wait for confirmation.
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Unibridge | Independent University, Bangladesh</p>
+    </footer>
+
+    <script>
+        function handleAppointment(e) {
+            e.preventDefault();
+            document.getElementById("notification").style.display = "block";
+        }
+    </script>
+</body>
+
+</html>
